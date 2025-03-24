@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Fixer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 10px; background-color: #f4f4f4; }
+        h2 { text-align: center; }
+        pre { background: #222; color: #fff; padding: 10px; border-radius: 5px; }
+        #editor { height: 300px; width: 100%; border: 1px solid #ddd; }
+        button { padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <h2>Enter Your Code</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div id="editor">{{ form.code.value }}</div>
+        <button type="submit">Check & Fix Code</button>
+    </form>
+
+    {% if output %}
+        <h3>Output:</h3>
+        <pre>{{ output }}</pre>
+    {% endif %}
+
+    {% if errors %}
+        <h3>Errors:</h3>
+        <pre>{{ errors }}</pre>
+    {% endif %}
+
+    {% if fixed_code %}
+        <h3>AI Fixed Code:</h3>
+        <pre>{{ fixed_code }}</pre>
+    {% endif %}
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/python");
+    </script>
+</body>
+</html>
